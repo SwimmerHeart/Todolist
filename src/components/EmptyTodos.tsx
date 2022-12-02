@@ -1,14 +1,15 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Button} from "../style/ElementStyled";
 import styled from "styled-components";
 import AddTodosModal from "./AddTodosModal";
-import {useSelector} from "react-redux";
-import {RootState} from "../app/store";
 import {useAppDispatch} from "../app/hooks";
 import {setEditMode} from "../features/todos/todoSlice";
 
 const EmptyBlock = styled.div`
+  margin: 15% auto;
+  text-align: center;
   padding: 0 1rem;
+  
   p {
     color: var(--main-purple);
     margin-bottom: 2rem;

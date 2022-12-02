@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {Button} from "../style/ElementStyled";
 import {useAppDispatch} from "../app/hooks";
-import {addTodo, setEditMode} from "../features/todos/todoSlice";
+import {addTodo, ITodoItem, setEditMode} from "../features/todos/todoSlice";
+import {useSelector} from "react-redux";
+import {RootState} from "../app/store";
 
 
 const ModalBlock = styled.div`
@@ -12,6 +14,7 @@ const ModalBlock = styled.div`
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 20;
 `
 const AddTodoBlock = styled.div`
   display: block;
@@ -46,6 +49,7 @@ const Form = styled.form`
     padding: 0.5rem;
     margin-bottom: 0.5rem;
     color: var(--medium-grey);
+
     :focus {
       outline: 2px solid var(--main-purple);
     }
@@ -58,15 +62,40 @@ type TAddTodosModalProps = {
 
 
 const AddTodosModal: React.FC = () => {
-    const [title, setTitle] = useState('')
-    const [description, setDescription] = useState('')
+
     const dispatch = useAppDispatch()
+    const {todos} = useSelector((state: RootState) => state.todos)
+    const [newTodo, setNewTodo] = useState<ITodoItem>({
+        id: new Date().toISOString(),
+        number: todos.length+1,
+        title: '',
+        description: '',
+        tasks: []
+    })
 
     const submitForm = (e: React.SyntheticEvent) => {
         e.preventDefault()
         dispatch(setEditMode(false))
-        dispatch(addTodo({title, description}))
+        dispatch(addTodo(newTodo))
+        setNewTodo({
+            id: new Date().toISOString(),
+            number: todos.length,
+            title: '',
+            description: '',
+            tasks: []
+        })
     }
+    const setTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTodo({
+            ...newTodo, title: e.target.value
+        })
+    }
+    const setDescription = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setNewTodo({
+            ...newTodo, description: e.target.value
+        })
+    }
+
 
     return (
         <ModalBlock onClick={() => dispatch(setEditMode(false))}>
@@ -74,21 +103,21 @@ const AddTodosModal: React.FC = () => {
                 <h2>Добавить новый проект</h2>
                 <div className="container">
                     <Form onSubmit={submitForm}>
-                        <label htmlFor="todo_name">Заголовок</label>
+                        <label htmlFor="todo_name">Название</label>
                         <input type="text"
                                id="todo_name"
                                name="todo_name"
                                placeholder="Введите название проекта"
-                               value={title}
-                               onChange={(e)=>setTitle(e.target.value)}
+                               value={newTodo.title}
+                               onChange={setTitle}
                         />
                         <label htmlFor="todo_description">Описание</label>
                         <input type="textarea"
                                id="todo_description"
                                name="todo_description"
                                placeholder="Опишите что нужно сделать"
-                               value={description}
-                               onChange={(e=>setDescription(e.target.value))}
+                               value={newTodo.description}
+                               onChange={setDescription}
                         />
                         <Button type="submit">Создать проект</Button>
                     </Form>

@@ -1,43 +1,81 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;600;800&family=Outfit:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
 
 :root {
-  --white: rgb(255, 255, 255);
-  --white-hover: rgba(255, 255, 255, 0.726);
-  --main-purple: rgb(99, 95, 199);
-  --main-50purple: rgba(99, 95, 199, .5);
-  --light-purple: rgba(99, 95, 199, .1);
-  --bg-grey: rgb(244, 247, 253);
-  --medium-grey: rgb(130, 143, 163);
-  --light-grey: rgba(130, 143, 163, .1);
-  --dim: rgba(0, 0, 0, 0.5);
-  --red: rgb(234, 85, 85);
-  --red-hover: rgba(234, 85, 85, 0.728);
-  --bg-dark: rgb(32, 33, 44);
-  --bg-50dark: rgb(43, 44, 55);
+    --white: rgb(255, 255, 255);
+    --white-hover: rgba(255, 255, 255, 0.726);
+    --main-purple: rgb(99, 95, 199);
+    --main-50purple: rgba(99, 95, 199, .5);
+    --light-purple: rgba(99, 95, 199, .1);
+    --bg-grey: rgb(244, 247, 253);
+    --medium-grey: rgb(130, 143, 163);
+    --light-grey: rgba(130, 143, 163, .1);
+    --dim: rgba(0, 0, 0, 0.5);
+    --red: rgb(234, 85, 85);
+    --red-hover: rgba(234, 85, 85, 0.728);
+    --bg-dark: rgb(32, 33, 44);
+    --bg-50dark: rgb(43, 44, 55);
 }
-*{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
+
 body {
-  margin: 0;
-  font-family: 'Roboto', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background-color: var(--bg-menu);
 }
-ul,ol{
-  list-style: none;
+
+body[data-theme = 'light'] {
+    --color-text: var(--white);
+    --color-textMenu: rgb(130, 143, 163);
+    --color-textMain: rgb(43, 44, 55);
+    --color-textItem: rgb(99, 95, 199);
+    --bg-menu: rgb(255, 255, 255);
+    --bg-btn: rgba(99, 95, 199, .5);
+    --bg-btn-hover: rgb(99, 95, 199);
+    --medium-grey: rgb(130, 143, 163);
+    --bg-main: rgba(99, 95, 199, .1);
+    --bg-50dark: rgb(43, 44, 55);
+    --color-elem: rgb(130, 143, 163);
+    --shadow: 1px 1px 10px rgba(149,157,165,0.2) ;
 }
-a{
-  text-decoration: none;
+
+body[data-theme = 'dark'] {
+  --white: rgb(255, 255, 255);
+  --color-text: rgb(130, 143, 163);
+  --color-textMenu: rgb(255, 255, 255);
+  --color-textMain: rgb(130, 143, 163);
+  --shadow:  1px 1px 10px rgba(255,255,255,0.3);
+  --light-purple: rgba(99, 95, 199, .1);
+  --bg-main: rgb(32, 33, 44);
+  --bg-menu: rgb(43, 44, 55);
+  --bg-btn: rgb(99, 95, 199);
+  --bg-btn-hover: rgba(99, 95, 199, .5);
+  --color-elem: rgba(99, 95, 199, .5);
+  --color-textItem: rgb(255, 255, 255);
 }
-a:active, a:hover{
-  color: inherit;
+
+ul, ol {
+    list-style: none;
 }
-button{
-  border: none;
+
+a {
+    text-decoration: none;
 }
+
+a:active, a:hover, a:visited {
+    color: inherit;
+}
+
+button {
+    border: none;
+}
+
 code {
-  font-family: 'Roboto', sans-serif;
+    font-family: 'Roboto', sans-serif;
 }

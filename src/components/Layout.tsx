@@ -1,38 +1,26 @@
 import React from 'react';
+import Header from "./Header";
+import NavTodos from "./NavTodos";
+import {Outlet} from "react-router-dom";
 import styled from "styled-components";
-import EmptyTodos from "./EmptyTodos";
-import {useSelector} from "react-redux";
-import {RootState} from "../app/store";
-import TodosPage from "../page/TodosPage";
 
-const MainBlock = styled.main`
-  background-color: var(--bg-grey);
-  min-height: 100vh;
-  min-width: 100vw;
+const TodosContainer = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  //position: relative;
-  //overflow: auto;
-  //margin-top: -1px;
+  padding: 10px;
+  max-width: 1600px;
+  //height: 100vh;
+  background-color: var(--bg-menu);
 `
 
-interface ITodos {
-    id: string
-    num: number
-    status: any
-    description: string
-    startDate: string
-    endDate: string
-    timeTodo: string
-}
-
-const Layout:React.FC = () => {
-  const {todos, editMode} = useSelector((state:RootState)=>state.todos)
+const Layout: React.FC = () => {
     return (
-        <MainBlock>
-            {todos.length === 0 ? <EmptyTodos editMode={editMode}/> : <TodosPage todos={todos} editMode={editMode}/>}
-        </MainBlock>
+        <>
+            <Header/>
+            <TodosContainer>
+                <NavTodos/>
+                <Outlet/>
+            </TodosContainer>
+        </>
     );
 };
 

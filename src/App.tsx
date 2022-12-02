@@ -1,17 +1,20 @@
 import React from 'react';
 import './App.css';
-import Header from "./components/Header";
-import Layout from "./components/Layout";
 import {Route, Routes} from "react-router-dom";
 import TaskPage from "./page/TaskPage";
+import TodosPage from "./page/TodosPage";
+import Layout from "./components/Layout";
+import CurrentTodoPage from "./page/CurrentTodoPage";
 
 function App() {
     return (
         <>
-            <Header/>
             <Routes>
-                <Route path={'/'} element={<Layout/>}/>
-                <Route path={'/task'} element={<TaskPage/>}/>
+                <Route path={'/'} element={<Layout/>}>
+                    <Route index element={<TodosPage/>}/>
+                    <Route path={'todo'} element={<TaskPage/>}/>
+                    <Route path={'todo/:name'} element={<CurrentTodoPage/>}/>
+                </Route>
             </Routes>
         </>
     );

@@ -6,11 +6,14 @@ import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
 
 const TaskBlock = styled.div`
+  background-color: var(--bg-main);
+  height: 100vh;
+  width: 100%;
+  max-width: 1300px;
   display: flex;
   gap: 1rem;
 `
 const TaskContent = styled.main`
-  background-color: var(--bg-grey);
   min-height: 100vh;
   min-width: 100vw;
   display: flex;
@@ -64,7 +67,6 @@ const TaskPage: React.FC = () => {
 
     return (
         <TaskBlock>
-            <NavTodos todos={todos}/>
             <TaskContent>
                 {status.map(item=>(
                     <TaskStatus key={item}>
@@ -86,5 +88,4 @@ const TaskPage: React.FC = () => {
         </TaskBlock>
     );
 };
-
 export default TaskPage;
