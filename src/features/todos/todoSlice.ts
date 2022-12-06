@@ -1,5 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import {RootState} from '../../app/store';
+import currentTodoPage from "../../page/CurrentTodoPage";
 
 export interface ITodoItem {
     id: string
@@ -13,10 +14,9 @@ export interface ITaskItem{
     number: number
     title: string
     description: string
-    startDate?: Date
-    endDate?: Date
-    distance?: string
-    priority?: string
+    startDate: string
+    endDate: string
+    priority: string
     files?: string
     completed: string
     subtask:ISubTask[]
@@ -26,6 +26,7 @@ export interface ISubTask{
     title: string
     completed: boolean
 }
+
 
 
 export enum Status {
@@ -41,7 +42,6 @@ interface ITodoState {
     editMode: boolean
     editMenu: boolean
     currentTodo: string
-    // currentTodo: ITodoItem | null
     theme: string
 }
 
@@ -93,20 +93,20 @@ export const todoSlice = createSlice({
         addTask: (state, action) => {
             state.todos.filter(todo=>todo.title === state.currentTodo)
                 .find(todo=>todo.tasks.push(action.payload))
+        },
+        removeTask: (state, action) => {
+            // @ts-ignore
+            const taskIndex = state.todos.find(todo => todo.title === state.currentTodo)
+                .tasks.findIndex((task) => task.title === action.payload.title)
+            // @ts-ignore
+            state.todos.find(todo => todo.title === state.currentTodo)
+                .tasks.splice(taskIndex, 1)
 
-            // .find(todo=>todo.tasks.push(action.payload))
-            // if(state.currentTodo){
-            //     state.currentTodo.tasks.push(action.payload)
-            // }
-            // state[0].boards
-            //     .find((board) => board.name === state[1])
-            //     .columns.find((col) => col.name === action.payload.status)
-            //     .tasks.push(action.payload);
         },
     }
 });
 
 export const {toggleTheme, addTodo, removeTodo, setEditMode,
-    setCurrentTodo,searchTodoTitle,setSearchValue, searchTodoCount, addTask } = todoSlice.actions;
+    setCurrentTodo,searchTodoTitle,setSearchValue, searchTodoCount, addTask,removeTask } = todoSlice.actions;
 export const selectTodo = (state: RootState) => state.todos;
 export default todoSlice.reducer;

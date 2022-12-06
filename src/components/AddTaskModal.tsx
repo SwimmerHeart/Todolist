@@ -2,9 +2,11 @@ import React, {useState} from 'react';
 import styled from "styled-components";
 import {Button, ButtonModal, IconSvg} from "../style/ElementStyled";
 import {useAppDispatch} from "../app/hooks";
-import {addTask, ITaskItem, setCurrentTodo} from "../features/todos/todoSlice";
+import {addTask, ITaskItem} from "../features/todos/todoSlice";
 import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
+import {format} from "date-fns";
+import {ru} from "date-fns/locale";
 
 
 type TModalProps = {
@@ -87,7 +89,6 @@ const Form = styled.form`
 const AddTaskModal: React.FC<TModalProps> = ({active, setActive}) => {
     const {todos} = useSelector((state:RootState)=>state.todos)
     let numberTask:number = todos.length + 1
-    let date = new Date()
 
     const [newTask, setNewTask] = useState<ITaskItem>({
         id:new Date().toISOString(),
@@ -95,7 +96,8 @@ const AddTaskModal: React.FC<TModalProps> = ({active, setActive}) => {
         title: '',
         description: '',
         priority: 'high',
-        startDate: date,
+        startDate: new Date().toISOString(),
+        endDate: '',
         completed: 'queue',
         subtask:[{title:'', completed: false, id: new Date().toISOString()}]
     })
@@ -124,7 +126,11 @@ const AddTaskModal: React.FC<TModalProps> = ({active, setActive}) => {
             ...newTask, completed: e.target.value
         })
     }
-
+    const setEndDate = (e:React.ChangeEvent<HTMLInputElement>)=>{
+        setNewTask({
+            ...newTask, endDate: e.target.value
+        })
+    }
     const addSubTask = () => {
         setNewTask(
             {...newTask,
@@ -153,12 +159,14 @@ const AddTaskModal: React.FC<TModalProps> = ({active, setActive}) => {
             title: '',
             description: '',
             priority: '',
-            startDate: date,
+            startDate: new Date().toISOString(),
+            endDate: '',
             completed: 'queue',
             subtask:[{title:'', completed: false, id: new Date().toISOString()}]
         })
         setActive(false)
     }
+
 
     return (
         <ModalBlock active={active}
@@ -192,6 +200,14 @@ const AddTaskModal: React.FC<TModalProps> = ({active, setActive}) => {
                                placeholder="Опишите что нужно сделать"
                                value={newTask.description}
                                onChange={setDescription}
+                        />
+                        <label htmlFor="todo_date">Сроки для выполнения задачи</label>
+                        <input type="datetime-local"
+                               id="todo_date"
+                               name="todo_date"
+                               placeholder="Введите время завершения задачи"
+                               value={newTask.endDate}
+                               onChange={(e)=>setEndDate(e)}
                         />
                         <label htmlFor="subtask">Подзадача</label>
                         {newTask.subtask.map((sub,index)=>(

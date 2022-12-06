@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import styled from "styled-components";
 import {useAppDispatch} from "../app/hooks";
 import {ITodoItem, setCurrentTodo, setEditMode} from "../features/todos/todoSlice";
-import {NavLink} from "react-router-dom";
+import {Link, NavLink} from "react-router-dom";
 import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
 import SwitchTheme from "./SwitchTheme";
@@ -54,14 +54,15 @@ const NavItem = styled.li`
       border-top-right-radius: 1.5rem;
       border-bottom-right-radius: 1.5rem;
     }
+    &.active-link {
+      color: var(--white);
+      background-color: var(--main-purple);
+      border-top-right-radius: 1.5rem;
+      border-bottom-right-radius: 1.5rem;
+    }
   }
 
-  a.active {
-    color: var(--white);
-    background-color: var(--main-purple);
-    border-top-right-radius: 1.5rem;
-    border-bottom-right-radius: 1.5rem;
-  }
+ 
 
   svg {
     margin-right: 5px;
@@ -110,7 +111,9 @@ const NavTodos: React.FC = () => {
                     <NavItem key={todo.id}
                              onClick={() => onClickListItem(todo.title)}
                     >
-                        <NavLink to={`/todo/${todo.number}`}>
+                        <NavLink to={`/todo/${todo.number}`}
+                              className={({isActive}) => isActive ? 'active-link' : ''}
+                        >
                             <svg xmlns="http://www.w3.org/2000/svg"
                                  width="16" height="16" preserveAspectRatio="xMidYMid meet"
                                  viewBox="0 0 24 24">

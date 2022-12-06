@@ -1,12 +1,12 @@
 import React, {useEffect} from 'react';
 import styled from "styled-components";
-import TodosItem from "../components/TodosItem";
 import AddTodosModal from "../components/AddTodosModal";
 import {ITodoItem, searchTodoTitle} from "../features/todos/todoSlice";
 import {useAppDispatch} from "../app/hooks";
 import {useSelector} from "react-redux";
 import {RootState} from "../app/store";
 import EmptyTodos from "../components/EmptyTodos";
+import TodoItem from "../components/TodoItem";
 
 
 
@@ -47,7 +47,7 @@ const TodosPage:React.FC = () => {
 
     return (
         <TodosBlock>
-            {todos.length>0 && filteredTodos.map(todo=><TodosItem key={todo.number} {...todo}/>)}
+            {todos.length>0 && filteredTodos.map(todo=><TodoItem key={todo.number} {...todo}/>)}
             {editMode && <AddTodosModal />}
         </TodosBlock>
     );

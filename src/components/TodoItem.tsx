@@ -1,7 +1,8 @@
 import React from 'react';
 import styled from "styled-components";
-import {ITodoItem} from "../features/todos/todoSlice";
+import {ITodoItem, setCurrentTodo} from "../features/todos/todoSlice";
 import {Link} from "react-router-dom";
+import {useAppDispatch} from "../app/hooks";
 
 
 
@@ -37,11 +38,16 @@ export const Item = styled.li`
   }
 `
 
-const TodosItem: React.FC<ITodoItem> = ({title, id, description,number}) => {
-
+const TodoItem: React.FC<ITodoItem> = ({title, id, description,number}) => {
+    const dispatch = useAppDispatch()
+    const setTodo = (title: string)=>{
+        dispatch(setCurrentTodo(title))
+    }
     return (
         <Item>
-            <Link to={`/todo/${number}`} style={{}}>
+            <Link to={`/todo/${number}`}
+                  onClick={()=>setTodo(title)}
+            >
                 <h2>{title}</h2>
                 <p>1 задача из 3</p>
             </Link>
@@ -49,4 +55,4 @@ const TodosItem: React.FC<ITodoItem> = ({title, id, description,number}) => {
     );
 };
 
-export default TodosItem;
+export default TodoItem;

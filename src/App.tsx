@@ -12,7 +12,7 @@ function App() {
             <Routes>
                 <Route path={'/'} element={<Layout/>}>
                     <Route index element={<TodosPage/>}/>
-                    <Route path={'todo'} element={<TaskPage/>}/>
+                    {/*<Route path={'todo'} element={<CurrentTodoPage/>}/>*/}
                     <Route path={'todo/:name'} element={<CurrentTodoPage/>}/>
                 </Route>
             </Routes>
